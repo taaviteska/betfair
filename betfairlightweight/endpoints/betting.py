@@ -1,4 +1,4 @@
-from .baseendpoint import BaseEndpoint
+from .baseendpoint import RestEndpoint
 from .. import resources
 from ..filters import (
     market_filter,
@@ -7,12 +7,12 @@ from ..filters import (
 from ..utils import clean_locals
 
 
-class Betting(BaseEndpoint):
+class Betting(RestEndpoint):
     """
     Betting operations.
     """
 
-    URI = 'SportsAPING/v1.0/'
+    URI = 'betting/rest/v1.0/'
 
     def list_event_types(self, filter=market_filter(), locale=None, session=None, lightweight=None):
         """
@@ -27,8 +27,7 @@ class Betting(BaseEndpoint):
         :rtype: list[resources.EventTypeResult]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listEventTypes')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listEventTypes', params, session)
         return self.process_response(response, resources.EventTypeResult, elapsed_time, lightweight)
 
     def list_competitions(self, filter=market_filter(), locale=None, session=None, lightweight=None):
@@ -44,8 +43,7 @@ class Betting(BaseEndpoint):
         :rtype: list[resources.CompetitionResult]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listCompetitions')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listCompetitions', params, session)
         return self.process_response(response, resources.CompetitionResult, elapsed_time, lightweight)
 
     def list_time_ranges(self, filter=market_filter(), granularity='DAYS', session=None, lightweight=None):
@@ -63,8 +61,7 @@ class Betting(BaseEndpoint):
         :rtype: list[resources.TimeRangeResult]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listTimeRanges')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listTimeRanges', params, session)
         return self.process_response(response, resources.TimeRangeResult, elapsed_time, lightweight)
 
     def list_events(self, filter=market_filter(), locale=None, session=None, lightweight=None):
@@ -80,8 +77,7 @@ class Betting(BaseEndpoint):
         :rtype: list[resources.EventResult]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listEvents')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listEvents', params, session)
         return self.process_response(response, resources.EventResult, elapsed_time, lightweight)
 
     def list_market_types(self, filter=market_filter(), locale=None, session=None, lightweight=None):
@@ -97,8 +93,7 @@ class Betting(BaseEndpoint):
         :rtype: list[resources.MarketTypeResult]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listMarketTypes')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listMarketTypes', params, session)
         return self.process_response(response, resources.MarketTypeResult, elapsed_time, lightweight)
 
     def list_countries(self, filter=market_filter(), locale=None, session=None, lightweight=None):
@@ -114,8 +109,7 @@ class Betting(BaseEndpoint):
         :rtype: list[resources.CountryResult]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listCountries')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listCountries', params, session)
         return self.process_response(response, resources.CountryResult, elapsed_time, lightweight)
 
     def list_venues(self, filter=market_filter(), locale=None, session=None, lightweight=None):
@@ -131,8 +125,7 @@ class Betting(BaseEndpoint):
         :rtype: list[resources.VenueResult]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listVenues')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listVenues', params, session)
         return self.process_response(response, resources.VenueResult, elapsed_time, lightweight)
 
     def list_market_catalogue(self, filter=market_filter(), market_projection=None, sort=None, max_results=1,
@@ -153,8 +146,7 @@ class Betting(BaseEndpoint):
         :rtype: list[resources.MarketCatalogue]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listMarketCatalogue')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listMarketCatalogue', params, session)
         return self.process_response(response, resources.MarketCatalogue, elapsed_time, lightweight)
 
     def list_market_book(self, market_ids, price_projection=None, order_projection=None,
@@ -186,8 +178,7 @@ class Betting(BaseEndpoint):
         :rtype: list[resources.MarketBook]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listMarketBook')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listMarketBook', params, session)
         return self.process_response(response, resources.MarketBook, elapsed_time, lightweight)
 
     def list_current_orders(self, bet_ids=None, market_ids=None, order_projection=None, customer_order_refs=None,
@@ -215,8 +206,7 @@ class Betting(BaseEndpoint):
         :rtype: resources.CurrentOrders
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listCurrentOrders')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listCurrentOrders', params, session)
         return self.process_response(response, resources.CurrentOrders, elapsed_time, lightweight)
 
     def list_cleared_orders(self, bet_status='SETTLED', event_type_ids=None, event_ids=None, market_ids=None,
@@ -249,8 +239,7 @@ class Betting(BaseEndpoint):
         :rtype: resources.ClearedOrders
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listClearedOrders')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listClearedOrders', params, session)
         return self.process_response(response, resources.ClearedOrders, elapsed_time, lightweight)
 
     def list_market_profit_and_loss(self, market_ids, include_settled_bets=None, include_bsp_bets=None,
@@ -269,8 +258,7 @@ class Betting(BaseEndpoint):
         :rtype: list[resources.MarketProfitLoss]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listMarketProfitAndLoss')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listMarketProfitAndLoss', params, session)
         return self.process_response(response, resources.MarketProfitLoss, elapsed_time, lightweight)
 
     def place_orders(self, market_id, instructions, customer_ref=None, market_version=None,
@@ -294,8 +282,7 @@ class Betting(BaseEndpoint):
         :rtype: resources.PlaceOrders
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'placeOrders')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('placeOrders', params, session)
         return self.process_response(response, resources.PlaceOrders, elapsed_time, lightweight)
 
     def cancel_orders(self, market_id=None, instructions=None, customer_ref=None, session=None, lightweight=None):
@@ -313,8 +300,7 @@ class Betting(BaseEndpoint):
         :rtype: resources.CancelOrders
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'cancelOrders')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('cancelOrders', params, session)
         return self.process_response(response, resources.CancelOrders, elapsed_time, lightweight)
 
     def update_orders(self, market_id, instructions, customer_ref=None, session=None, lightweight=None):
@@ -331,8 +317,7 @@ class Betting(BaseEndpoint):
         :rtype: resources.UpdateOrders
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'updateOrders')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('updateOrders', params, session)
         return self.process_response(response, resources.UpdateOrders, elapsed_time, lightweight)
 
     def replace_orders(self, market_id, instructions, customer_ref=None, market_version=None,
@@ -356,6 +341,5 @@ class Betting(BaseEndpoint):
         :rtype: resources.ReplaceOrders
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'replaceOrders')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('replaceOrders', params, session)
         return self.process_response(response, resources.ReplaceOrders, elapsed_time, lightweight)

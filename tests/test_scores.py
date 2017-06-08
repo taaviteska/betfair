@@ -16,7 +16,8 @@ class ScoresInit(unittest.TestCase):
         assert scores.connect_timeout == 3.05
         assert scores._error == APIError
         assert scores.client == client
-        assert scores.URI == 'ScoresAPING/v1.0/'
+        assert scores.URI == 'scores/json-rpc/v1'
+        assert scores.METHOD == 'ScoresAPING/v1.0/'
 
 
 class ScoresTest(unittest.TestCase):

@@ -4,28 +4,25 @@ from tests import mock
 from requests.exceptions import ConnectionError
 
 from betfairlightweight import APIClient
-from betfairlightweight.endpoints.baseendpoint import BaseEndpoint
+from betfairlightweight.endpoints.baseendpoint import BaseEndpoint, RestEndpoint
 from betfairlightweight.exceptions import APIError
 
 from tests.tools import create_mock_json
 
 
-class BaseEndpointInit(unittest.TestCase):
-
-    def test_base_endpoint_init(self):
-        client = APIClient('username', 'password', 'app_key')
-        base_endpoint = BaseEndpoint(client)
-        assert base_endpoint.connect_timeout == 3.05
-        assert base_endpoint.read_timeout == 16
-        assert base_endpoint._error == APIError
-        assert base_endpoint.client == client
-
-
 class BaseEndPointTest(unittest.TestCase):
 
     def setUp(self):
-        client = APIClient('username', 'password', 'app_key', 'UK')
-        self.base_endpoint = BaseEndpoint(client)
+        self.client = APIClient('username', 'password', 'app_key', 'UK')
+        self.base_endpoint = BaseEndpoint(self.client)
+
+    def test_init(self):
+        assert self.base_endpoint.connect_timeout == 3.05
+        assert self.base_endpoint.read_timeout == 16
+        assert self.base_endpoint._error == APIError
+        assert self.base_endpoint.client == self.client
+        assert self.base_endpoint.URI is None
+        assert self.base_endpoint.METHOD is None
 
     def test_base_endpoint_create_req(self):
         payload = {'jsonrpc': '2.0',
@@ -46,7 +43,7 @@ class BaseEndPointTest(unittest.TestCase):
         mock_client_cert.return_value = []
         mock_cert.return_value = mock_client_cert
 
-        url = 'https://api.betfair.com/exchange/betting/json-rpc/v1'
+        url = 'https://api.betfair.com/exchange/None'
         response = self.base_endpoint.request(None, None, None)
 
         mock_post.assert_called_once_with(url, data=mock_create_req(),
@@ -104,7 +101,20 @@ class BaseEndPointTest(unittest.TestCase):
         assert type(response) == list
         assert response[0] == mock_resource()
 
-
-
     def test_base_endpoint_url(self):
-        assert self.base_endpoint.url == '%s%s' % (self.base_endpoint.client.api_uri, 'betting/json-rpc/v1')
+        assert self.base_endpoint.url == '%s%s' % (self.base_endpoint.client.api_uri, self.base_endpoint.URI)
+
+
+class RestEndpointTest(unittest.TestCase):
+
+    def setUp(self):
+        self.client = APIClient('username', 'password', 'app_key', 'UK')
+        self.rest_endpoint = RestEndpoint(self.client)
+
+    def test_init(self):
+        assert self.rest_endpoint.connect_timeout == 3.05
+        assert self.rest_endpoint.read_timeout == 16
+        assert self.rest_endpoint._error is None
+        assert self.rest_endpoint.client == self.client
+        assert self.rest_endpoint.URI is None
+        assert self.rest_endpoint.METHOD is None

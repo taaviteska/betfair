@@ -1,5 +1,3 @@
-import datetime
-
 from .baseendpoint import BaseEndpoint
 from .. import resources
 from ..utils import clean_locals
@@ -10,7 +8,8 @@ class Scores(BaseEndpoint):
     Scores operations.
     """
 
-    URI = 'ScoresAPING/v1.0/'
+    URI = 'scores/json-rpc/v1'
+    METHOD = 'ScoresAPING/v1.0/'
 
     def list_race_details(self, meeting_ids=None, race_ids=None, session=None, lightweight=None):
         """
@@ -27,7 +26,7 @@ class Scores(BaseEndpoint):
         :rtype: list[resources.RaceDetail]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listRaceDetails')
+        method = '%s%s' % (self.METHOD, 'listRaceDetails')
         (response, elapsed_time) = self.request(method, params, session)
         return self.process_response(response, resources.RaceDetails, elapsed_time, lightweight)
 
@@ -47,7 +46,7 @@ class Scores(BaseEndpoint):
         :rtype: list[resources.AvailableEvent]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listAvailableEvents')
+        method = '%s%s' % (self.METHOD, 'listAvailableEvents')
         (response, elapsed_time) = self.request(method, params, session)
         return self.process_response(response, resources.AvailableEvent, elapsed_time, lightweight)
 
@@ -63,7 +62,7 @@ class Scores(BaseEndpoint):
         :rtype: list[resources.Score]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listScores')
+        method = '%s%s' % (self.METHOD, 'listScores')
         (response, elapsed_time) = self.request(method, params, session)
         return self.process_response(response, resources.Score, elapsed_time, lightweight)
 
@@ -79,10 +78,10 @@ class Scores(BaseEndpoint):
         :rtype: list[resources.Incidents]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listIncidents')
+        method = '%s%s' % (self.METHOD, 'listIncidents')
         (response, elapsed_time) = self.request(method, params, session)
         return self.process_response(response, resources.Incidents, elapsed_time, lightweight)
 
     @property
     def url(self):
-        return '%s%s' % (self.client.api_uri, 'scores/json-rpc/v1')
+        return '%s%s' % (self.client.api_uri, self.URI)

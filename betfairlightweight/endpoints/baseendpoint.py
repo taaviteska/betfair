@@ -16,6 +16,8 @@ class BaseEndpoint(object):
     connect_timeout = 3.05
     read_timeout = 16
     _error = APIError
+    URI = None
+    METHOD = None
 
     def __init__(self, parent):
         """
@@ -34,7 +36,7 @@ class BaseEndpoint(object):
         date_time_sent = datetime.datetime.utcnow()
         try:
             response = session.post(
-                self.url,
+                self.create_url(method),
                 data=request,
                 headers=self.client.request_headers,
                 timeout=(self.connect_timeout, self.read_timeout)
@@ -48,9 +50,12 @@ class BaseEndpoint(object):
         response_data = response.json()
 
         check_status_code(response)
-        if self._error_handler:
+        if self._error:
             self._error_handler(response_data, method, params)
         return response_data, elapsed_time
+
+    def create_url(self, method):
+        return self.url
 
     @staticmethod
     def create_req(method, params):
@@ -103,4 +108,26 @@ class BaseEndpoint(object):
 
     @property
     def url(self):
-        return '%s%s' % (self.client.api_uri, 'betting/json-rpc/v1')
+        return '%s%s' % (self.client.api_uri, self.URI)
+
+
+class RestEndpoint(BaseEndpoint):
+
+    _error = None
+
+    @staticmethod
+    def create_req(method, params):
+        return json.dumps(params)
+
+    def create_url(self, method):
+        return '%s%s/' % (self.url, method)
+
+    def process_response(self, response_json, resource, elapsed_time, lightweight):
+        if lightweight:
+            return response_json
+        elif self.client.lightweight and lightweight is not False:
+            return response_json
+        elif isinstance(response_json, list):
+            return [resource(elapsed_time=elapsed_time, **x) for x in response_json]
+        else:
+            return resource(elapsed_time=elapsed_time, **response_json)

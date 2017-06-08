@@ -1,15 +1,15 @@
-from .baseendpoint import BaseEndpoint
+from .baseendpoint import RestEndpoint
 from .. import resources
 from ..utils import clean_locals
 from ..filters import time_range
 
 
-class Account(BaseEndpoint):
+class Account(RestEndpoint):
     """
     Account operations.
     """
 
-    URI = 'AccountAPING/v1.0/'
+    URI = 'account/rest/v1.0/'
     connect_timeout = 6.05
 
     def get_account_funds(self, wallet=None, session=None, lightweight=None):
@@ -23,8 +23,7 @@ class Account(BaseEndpoint):
         :rtype: resources.AccountFunds
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'getAccountFunds')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('getAccountFunds', params, session)
         return self.process_response(response, resources.AccountFunds, elapsed_time, lightweight)
 
     def get_account_details(self, session=None, lightweight=None):
@@ -38,8 +37,7 @@ class Account(BaseEndpoint):
         :rtype: resources.AccountDetails
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'getAccountDetails')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('getAccountDetails', params, session)
         return self.process_response(response, resources.AccountDetails, elapsed_time, lightweight)
 
     def get_account_statement(self, locale=None, from_record=None, record_count=None, item_date_range=time_range(),
@@ -59,8 +57,7 @@ class Account(BaseEndpoint):
         :rtype: resources.AccountStatementResult
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'getAccountStatement')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('getAccountStatement', params, session)
         return self.process_response(response, resources.AccountStatementResult, elapsed_time, lightweight)
 
     def list_currency_rates(self, from_currency=None, session=None, lightweight=None):
@@ -74,8 +71,7 @@ class Account(BaseEndpoint):
         :rtype: list[resources.CurrencyRate]
         """
         params = clean_locals(locals())
-        method = '%s%s' % (self.URI, 'listCurrencyRates')
-        (response, elapsed_time) = self.request(method, params, session)
+        (response, elapsed_time) = self.request('listCurrencyRates', params, session)
         return self.process_response(response, resources.CurrencyRate, elapsed_time, lightweight)
 
     def transfer_funds(self, session=None):
@@ -92,4 +88,4 @@ class Account(BaseEndpoint):
 
     @property
     def url(self):
-        return '%s%s' % (self.client.api_uri, 'account/json-rpc/v1')
+        return '%s%s' % (self.client.api_uri, self.URI)
