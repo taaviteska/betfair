@@ -583,10 +583,10 @@ class ClearedOrder(object):
     :type size_settled: float
     """
 
-    def __init__(self, betId, betCount, betOutcome, eventId, eventTypeId, handicap, lastMatchedDate, marketId,
-                 orderType, persistenceType, placedDate, priceMatched, priceReduced, profit, selectionId,
-                 settledDate, side, sizeSettled, sizeCancelled=None, priceRequested=None, customerStrategyRef=None,
-                 customerOrderRef=None):
+    def __init__(self, betId, eventId, eventTypeId, handicap, marketId, orderType, persistenceType, placedDate,
+                 selectionId, settledDate, side, betCount=None, betOutcome=None, lastMatchedDate=None,
+                 priceMatched=None, priceReduced=None, profit=None, sizeSettled=None, sizeCancelled=None,
+                 priceRequested=None, customerStrategyRef=None, customerOrderRef=None):
         self.bet_id = betId
         self.bet_count = betCount
         self.bet_outcome = betOutcome
