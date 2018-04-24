@@ -579,12 +579,14 @@ class ClearedOrder(object):
     :type selection_id: int
     :type settled_date: datetime.datetime
     :type side: unicode
+    :type size_cancelled: float
     :type size_settled: float
     """
 
     def __init__(self, betId, betCount, betOutcome, eventId, eventTypeId, handicap, lastMatchedDate, marketId,
                  orderType, persistenceType, placedDate, priceMatched, priceReduced, profit, selectionId,
-                 settledDate, side, sizeSettled, priceRequested=None, customerStrategyRef=None, customerOrderRef=None):
+                 settledDate, side, sizeSettled, sizeCancelled=None, priceRequested=None, customerStrategyRef=None,
+                 customerOrderRef=None):
         self.bet_id = betId
         self.bet_count = betCount
         self.bet_outcome = betOutcome
@@ -603,6 +605,7 @@ class ClearedOrder(object):
         self.selection_id = selectionId
         self.settled_date = BaseResource.strip_datetime(settledDate)
         self.side = side
+        self.size_cancelled = sizeCancelled
         self.size_settled = sizeSettled
         self.customer_strategy_ref = customerStrategyRef
         self.customer_order_ref = customerOrderRef
