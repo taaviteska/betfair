@@ -562,6 +562,7 @@ class ClearedOrder(object):
     :type bet_count: int
     :type bet_id: unicode
     :type bet_outcome: unicode
+    :type commission: float
     :type customer_order_ref: unicode
     :type customer_strategy_ref: unicode
     :type event_id: unicode
@@ -584,12 +585,13 @@ class ClearedOrder(object):
     """
 
     def __init__(self, betId, eventId, eventTypeId, handicap, marketId, orderType, persistenceType, placedDate,
-                 selectionId, settledDate, side, betCount=None, betOutcome=None, lastMatchedDate=None,
+                 selectionId, settledDate, side, betCount=None, betOutcome=None, commission=None, lastMatchedDate=None,
                  priceMatched=None, priceReduced=None, profit=None, sizeSettled=None, sizeCancelled=None,
                  priceRequested=None, customerStrategyRef=None, customerOrderRef=None):
         self.bet_id = betId
         self.bet_count = betCount
         self.bet_outcome = betOutcome
+        self.commission = commission
         self.event_id = eventId
         self.event_type_id = eventTypeId
         self.handicap = handicap
