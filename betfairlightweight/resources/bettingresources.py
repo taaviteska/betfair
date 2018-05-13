@@ -184,9 +184,9 @@ class MarketCatalogueDescription(object):
     :type wallet: unicode
     """
 
-    def __init__(self, bettingType, bspMarket, discountAllowed, marketBaseRate, marketTime, marketType,
+    def __init__(self, bettingType, bspMarket, discountAllowed, marketBaseRate, marketTime,
                  persistenceEnabled, regulator, rules, rulesHasDate, suspendTime, turnInPlayEnabled, wallet,
-                 eachWayDivisor=None, clarifications=None, priceLadderDescription=None, keyLineDefinition=None,
+                 marketType=None, eachWayDivisor=None, clarifications=None, priceLadderDescription=None, keyLineDefinition=None,
                  lineRangeInfo=None, raceType=None):
         self.betting_type = bettingType
         self.bsp_market = bspMarket
